@@ -2,4 +2,9 @@
 2.schedule 调度？小顶堆排序怎么实现？
 3.我调用useState触发更新，会走那些流程？主要经过的函数？
 4.react组件性能优化？props的 === 对比？怎么命中？useMemo，memo，componentShouldUpdate？
+    https://www.bilibili.com/video/BV1Yr4y1J7oc/?spm_id_from=333.999.0.0&vd_source=2a74786e51e7da52bedfb02836843d7a
 5.实现一个useState？
+6.setState同步还是异步？
+    https://www.bilibili.com/video/BV16t4y1r7oJ?p=2&vd_source=2a74786e51e7da52bedfb02836843d7a
+7.componentDidMount、useEffect、useLayoutEffect调用时机？
+8.不同框架的更新粒度？应用级、组件级、节点级？
