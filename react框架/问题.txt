@@ -1,0 +1,5 @@
+1.函数式编程，hooks实现，副作用，代数效应有什么联系？
+2.schedule 调度？小顶堆排序怎么实现？
+3.我调用useState触发更新，会走那些流程？主要经过的函数？
+4.react组件性能优化？props的 === 对比？怎么命中？useMemo，memo，componentShouldUpdate？
+5.实现一个useState？
