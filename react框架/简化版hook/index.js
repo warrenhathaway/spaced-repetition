@@ -59,8 +59,8 @@ function dispatchAction(queue, action) {
     if(queue.pending === null) {
         update.next = update
     } else {
-        queue.pending.next = update
         update.next = queue.pending.next
+        queue.pending.next = update
     }
     queue.pending = update
     schedule()
