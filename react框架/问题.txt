@@ -8,3 +8,4 @@
     https://www.bilibili.com/video/BV16t4y1r7oJ?p=2&vd_source=2a74786e51e7da52bedfb02836843d7a
 7.componentDidMount、useEffect、useLayoutEffect调用时机？
 8.不同框架的更新粒度？应用级、组件级、节点级？
+9.useEffect、同步、
