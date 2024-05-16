@@ -12,3 +12,14 @@
 五、node
   4-16～4-26一些场景
   5-3 扩展聊天室
+
+六、
+  一个项目：包含
+    node后台、数据库、接口路由、登录、webpack打包
+    ts、react、router、webpack搭建打包、roolup打包试试、聊天室
+
+七、js相关
+  1.手写promise
+  2.memorized
+  3.柯里化
+  4.
