@@ -25,6 +25,15 @@ function runMicroTask(callback) {
   }
 }
 
+/**
+ * 用promise A+规范判断是否为promise
+ * @param {*} target 
+ * @returns {boolean}
+ */
+function isPromise(target) {
+  return !!(target && typeof target === 'object' && typeof target.then === "function")
+}
+
 class MyPromise {
 
   constructor(executor) {
@@ -54,17 +63,66 @@ class MyPromise {
     })
   }
 
+  /**
+   * 状态变化执行
+   */
+  _runHandlers() {
+    if(this._status === PENDING) {
+      return
+    }
+    // console.log('处理', this._handlers);
+    while(this._handlers[0]) {
+      const handler = this._handlers[0]
+      this._runOneHandler(handler)
+      this._handlers.shift()
+    }
+  }
+
+  /**
+   * 处理一个handler
+   * @param {object} handler 
+   */
+  _runOneHandler({executor, status, resolve, reject}) {
+    runMicroTask(() => {
+      if(this._status !== status) {
+        // 状态不一致
+        return
+      }
+      if(typeof executor !== "function") {
+        // 传递不是一个函数，也就是没有后续处理的情况，那么后面的promise的状态跟前面保持一致
+        this._status === FULFILLED 
+          ? resolve(this._value) 
+          : reject(this._value)
+        return
+      }
+
+      try {
+        const result = executor(this._value)
+        if(isPromise(result)) {
+          result.then(resolve, reject)
+        } else {
+          resolve(result)
+        }
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
   then(onFulfilled, onRejected) {
     return new MyPromise((resolve, reject) => {
       this._pushHandlers(onFulfilled, FULFILLED, resolve, reject)
       this._pushHandlers(onRejected, REJECTED, resolve, reject)
+      this._runHandlers() //执行队列
     })
   }
 
   _changeStatus(newStatus, value) {
     if(this._status !== PENDING) return
-    this._value = value
     this._status = newStatus
+    this._value = value
+    // 状态变化执行队列
+    this._runHandlers()
   }
 
   _resolve(data) {
@@ -80,9 +138,8 @@ let p = new MyPromise((resolve, reject) => {
   setTimeout(() => {
     resolve(1)
   }, 1000);
-})
-
-p.then(function A1() {}, function A2() {})
-p.then(function B1() {}, function B2() {})
-
-console.log(p);
+});
+(async function() {
+  let res = await p
+  console.log('hahah', res);
+})()
