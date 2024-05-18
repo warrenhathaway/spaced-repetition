@@ -25,20 +25,3 @@
 //   arr.shift()
 // }
 // console.log(arr);
-
-let obj1 = {
-  name: 'obj1',
-}
-
-function test() {
-  console.log(this);
-}
-
-const fn = test.bind(obj1)
-
-let obj2 = {
-  name: 'obj2',
-  exec: fn
-}
-fn()
-obj2.exec()

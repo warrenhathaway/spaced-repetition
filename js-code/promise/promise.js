@@ -117,6 +117,24 @@ class MyPromise {
     })
   }
 
+  catch(onRejected) {
+   return this.then(null, onRejected)
+  }
+
+  /**
+   * 无论成功失败都会执行逻辑
+   * @param {*} onSettled 
+   */
+  finally(onSettled) {
+    return this.then((data) => {
+      onSettled()
+      return data
+    }, (reason) => {
+      onSettled()
+      throw reason
+    })
+  }
+
   _changeStatus(newStatus, value) {
     if(this._status !== PENDING) return
     this._status = newStatus
@@ -133,13 +151,94 @@ class MyPromise {
     this._changeStatus(REJECTED, reason)
   }
 
+  static resolve(data) {
+    if(data instanceof MyPromise) {
+      return data
+    }
+    return new MyPromise((resolve, reject) => {
+      if(isPromise(data)) {
+        data.then(resolve, reject)
+      } else {
+        resolve(data)
+      }
+    })
+  }
+
+
+  static reject(reason) {
+    return new MyPromise((resolve, reject) => {
+      reject(reason)
+    })
+  }
+
+  static all(proms) {
+    return new MyPromise((resolve, reject) => {
+      try {
+        const result = []
+        let count = 0
+        let fulfilledCount = 0
+        for(const p of proms) {
+          let i = count
+          count++
+          MyPromise.resolve(p).then(data => {
+            result[i] = data
+            fulfilledCount++
+            if(fulfilledCount === count) resolve(result)
+          }, reason => {
+            reject(reason)
+          })
+        }
+        if(count === 0) resolve(result)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  static allSettled(proms) {
+    const ps = []
+    for (const p of proms) {
+      ps.push(MyPromise.resolve(p).then((value) => ({
+        status: FULFILLED,
+        value
+      }), (reason) => ({
+        status: REJECTED,
+        reason
+      })))
+    }
+    return this.all(ps)
+  }
+
+
+  static race(proms) {
+    return new Promise((resolve, reject) => {
+      for (const p of proms) {
+        MyPromise.resolve(p).then(resolve, reject)
+      }
+    })
+  }
 }
+
 let p = new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    resolve(1)
+    reject(3)
+  });
+});
+
+let p2 = new MyPromise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(2)
+  }, 500);
+});
+
+let p3 = new MyPromise((resolve, reject) => {
+  setTimeout(() => {
+    reject(1)
   }, 1000);
 });
-(async function() {
-  let res = await p
-  console.log('hahah', res);
-})()
+
+MyPromise.race([p, p2, p3]).then((res) => {
+  console.log('结果', res);
+}).catch((err) => {
+  console.log('err', err);
+})
