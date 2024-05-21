@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">发送</button>
+
+  <script>
+    if ("serviceWorker" in navigator) { 
+      navigator.serviceWorker.register('index.js', {
+        scope: './'
+      }).then((registration) => {
+        console.log('registration', registration);
+      })
+    }
+
+    btn.onclick = () => {
+      navigator.serviceWorker.controller.postMessage('hahaha')
+    }
+  </script>
+</body>
+</html>

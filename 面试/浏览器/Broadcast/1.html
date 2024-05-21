@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">发送</button>
+  <script>
+    let bc = new BroadcastChannel("test_channel");
+    btn.onclick = () => {
+      bc.postMessage("我是html1");
+    }
+    bc.onmessage = function (ev) {
+      console.log(ev.data);
+    };
+  </script>
+</body>
+</html>
