@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      width: 375px;
+      height: 375px;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div>啦啦啦</div>
+  <script>
+    let a = {
+      b: {
+        c: {
+          d: 1
+        },
+        e: 2
+      },
+      f: [
+        {
+          g: null
+        }
+      ]
+    }
+
+    function deepClone(obj) {
+      if(typeof obj !== "object" || obj === null) return obj
+      let res = Array.isArray(obj) ? [] : {}
+      for (const key in obj) {
+        // if(typeof obj[key] !== "object") {
+        //   res[key] = obj[key]
+        // } else {
+          res[key] = deepClone(obj[key])
+        // }
+      }
+      return res
+    }
+
+    let cloneA = deepClone(a)
+    a.b.c = '1111'
+    console.log(cloneA);
+    console.log(a);
+
+  </script>
+</body>
+</html>
