@@ -16,4 +16,20 @@
 1.高阶组件-练习
 2.ref？ref转发？高阶组件中ref问题？
 3.context？会让组件不纯粹，因为之前只依赖props？用了上下文不会执行shouldComponentUpdate，是直接渲染？怎么性能优化？3-8-60
-4.
+4.PureComponent优化重新渲染
+5.renderProps复用？
+6.react的事件？事件冒泡和真实的冒泡？合成事件对象？
+
+**卸载更新**
+更新子节点3-15(2)-1:38、
+切换一个节点的显示隐藏优化1:52
+
+**动画**
+基础-动画1
+css transition动画 两个元素同时淡入淡出可以使用-动画2
+SwitchTransition 有秩序的切换（不同时）-动画3
+
+**react全家桶**
+1.react：处理ui变化
+2.react-router：根据地址匹配路由，展示不同组件
+3.redux：处理数据以及数据的变化（主要是处理共享数据）
