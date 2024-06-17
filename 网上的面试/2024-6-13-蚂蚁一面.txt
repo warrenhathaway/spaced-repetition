@@ -39,7 +39,7 @@
 	get的可以缓存
 12.简单说一些react fiber？
 	fiber出现之前，是递归构建虚拟树，每一次更新可能时间过长，这样就会造成一帧执行不完，然后呢主线程被占用，渲染任务都被推迟了，造成卡顿
-	fiber出现就是将一整个任务拆开来，通过react实现的库scheduler，分片构建并diff，最后再render
+	fiber出现就是将一整个任务拆开来，通过react实现的库scheduler，分片构建并diff，完成render阶段，最后再commit
 	
 	reconciler过程有diff吗？*
 13.react任务调度怎么做的？
@@ -52,7 +52,6 @@
 	react的事件对象并不是原生的事件对象，他是绑定到document上的，先冒泡的document上，然后才执行一个
 	事件队列的函数
 	为什么不直接绑定元素上？
-		首先react是虚拟dom，这时候还没有真实对象？*
 17.HOC？
 	高阶组件，能用来干啥？
 	增强组件功能？复用逻辑？*
@@ -78,8 +77,11 @@
 -----------------
 5: 可枚举属性、hasOwnProperty
 9：跨域才会区分简单请求预检请求options
-
-
+12: https://react.iamkasong.com/process/completeWork.html#effectlist
+16: https://cloud.tencent.com/developer/article/2399123
+-----
+3
+13
 
 
 
